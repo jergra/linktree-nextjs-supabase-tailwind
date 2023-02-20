@@ -34,6 +34,7 @@ export default function Home() {
         const userId = user.data.user?.id 
         setIsAuthenticated(true)
         setUserId(userId)
+        console.log('isAuthenticated:', isAuthenticated)
       }
     }
 
@@ -126,6 +127,7 @@ export default function Home() {
 
   return (
         <div className='flex flex-col justify-center items-center w-full bg-indigo-50'>
+          <button onClick={() => setIsAuthenticated(false)}>Sign Out</button>
           {profilePictureUrl && 
               <Image
                 src={profilePictureUrl}
@@ -135,7 +137,7 @@ export default function Home() {
                 className='mt-20 rounded-full'
               />
           }
-         
+          <div className={isAuthenticated ? '' : 'mb-96'}>
           {links?.map((link: Link, index: number) => (
             <div 
                 key={index}
@@ -149,6 +151,7 @@ export default function Home() {
                   {link.title}
             </div>
           ))}
+          </div>
           {isAuthenticated && (
             <>
               <div className='mt-10 flex h-10 items-center p-5'>

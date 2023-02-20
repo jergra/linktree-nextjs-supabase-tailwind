@@ -13,3 +13,8 @@ start:
 
 deployed:
     https://linktree-nextjs-supabase-tailwind.vercel.app/
+
+update:
+    git add .
+    git commit -m 'message'
+    git push
