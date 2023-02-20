@@ -73,7 +73,7 @@ export default function Login() {
             id="password"
             className="block w-full rounded-md border-gray-300 shadow-sm 
             focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            placeholder=""
+            placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

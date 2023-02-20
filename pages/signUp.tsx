@@ -19,6 +19,7 @@ export default function SignUp() {
             await createUser(userId)
             console.log('userId:', userId)
           }
+          alert('Please confirm your email address by clicking in the message that was sent there.')
         }
       } catch (error) {
         console.log('error:', error)
@@ -66,7 +67,7 @@ export default function SignUp() {
             id="password"
             className="block w-full rounded-md border-gray-300 shadow-sm 
             focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            //placeholder="password"
+            placeholder="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>

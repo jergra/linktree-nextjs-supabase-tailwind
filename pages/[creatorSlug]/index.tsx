@@ -116,6 +116,7 @@ export default function Home() {
               .update({profile_picture_url: publicUrl})
               .eq('id', userId)
               if (updateUserResponse.error) throw error
+            window.location.reload()
         }
       }
     } catch (error) {
@@ -124,14 +125,14 @@ export default function Home() {
   }
 
   return (
-        <div className='flex flex-col justify-center items-center w-full h-screen bg-blue-50'>
+        <div className='flex flex-col justify-center items-center w-full bg-indigo-50'>
           {profilePictureUrl && 
               <Image
                 src={profilePictureUrl}
                 alt='profile-picture'
                 height={100}
                 width={100}
-                className='rounded-full'
+                className='mt-20 rounded-full'
               />
           }
          
@@ -141,7 +142,8 @@ export default function Home() {
                 className='cursor-pointer shadow-xl w-96 bg-indigo-500 mt-4 rounded-lg p-4 text-center text-white text-2xl'
                 onClick={(e) => {
                   e.preventDefault()
-                  window.location.href = link.url
+                  //window.location.href = link.url
+                  window.open(link.url, '_blank');
                 }}
             >
                   {link.title}
@@ -205,7 +207,7 @@ export default function Home() {
                     // write your building UI
                     <div className="">
                       <button
-                        className='p-10 h-100 w-100 border border-indigo-500'
+                        className='p-10 h-100 w-100 rounded-md border border-gray-300 shadow-sm bg-white'
                         style={isDragging ? { color: "red" } : undefined}
                         onClick={onImageUpload}
                         {...dragProps}
@@ -221,7 +223,10 @@ export default function Home() {
                         <div key={index} className="image-item">
                           <img src={image.dataURL} alt="" width="100" />
                           <div className="image-item__btn-wrapper">
-                            <button onClick={() => onImageUpdate(index)}>Update</button>
+                            <button 
+                              onClick={() => onImageUpdate(index)}
+                              className='mr-2'
+                            >Update</button>
                             <button onClick={() => onImageRemove(index)}>Remove</button>
                           </div>
                         </div>
@@ -231,7 +236,7 @@ export default function Home() {
                 </ImageUploading>
                 <button
                   type="submit"
-                  className="mt-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  className="mt-4 mb-96 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   onClick={uploadProfilePicture}
                 >
                   Upload Profile Picture

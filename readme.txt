@@ -11,3 +11,5 @@ from tutorial:
 start:
     npm run dev
 
+deployed:
+    https://linktree-nextjs-supabase-tailwind.vercel.app/
