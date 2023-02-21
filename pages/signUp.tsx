@@ -19,7 +19,7 @@ export default function SignUp() {
             await createUser(userId)
             console.log('userId:', userId)
           }
-          alert('Please confirm your email address by clicking in the message that was sent there.')
+          alert('Please confirm your email address by clicking the link in the email that has been sent.')
         }
       } catch (error) {
         console.log('error:', error)

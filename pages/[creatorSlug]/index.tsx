@@ -30,15 +30,13 @@ export default function Home() {
     const getUser = async () => {
       const user = await supabase.auth.getUser()
       console.log('user:', user)
-
-
       try {
         const {data, error} = await supabase
           .from('users')
           .select('id')
           .eq('username', creatorSlug)
         if (error) throw error
-        console.log('data1[0].id:', data[0]?.id)
+        console.log('data1[0]?.id:', data[0]?.id)
         console.log('user.data.user?.id:', user.data.user?.id)
         if (data[0]?.id && user.data.user?.id) {
           if (data[0]?.id === user.data.user?.id) {
@@ -48,22 +46,9 @@ export default function Home() {
             console.log('isAuthenticated:', isAuthenticated)
           } 
         }
-        //const profilePictureUrl = data[0]['profile_picture_url']
-        //const userId = data[0]['id']
-        //setProfilePictureUrl(profilePictureUrl)
-        //setUserId(userId)
       } catch (error) {
         console.log('error:', error)
       }
-      
-
-
-      // if (user) {
-      //   const userId = user.data.user?.id 
-      //   setIsAuthenticated(true)
-      //   setUserId(userId)
-      //   console.log('isAuthenticated:', isAuthenticated)
-      // } 
     }
 
     getUser()
@@ -123,6 +108,8 @@ export default function Home() {
         if (links) {
           setLinks([...data, ...links])
         }
+        setTitle('')
+        setUrl('')
       }
     } catch (error) {
       console.log('error:', error)
@@ -155,7 +142,6 @@ export default function Home() {
 
   return (
         <div className='flex flex-col justify-center items-center w-full bg-indigo-50'>
-          <button onClick={() => setIsAuthenticated(false)}>Sign Out</button>
           {profilePictureUrl && 
               <Image
                 src={profilePictureUrl}
@@ -187,6 +173,7 @@ export default function Home() {
                   type="text"
                   name="title"
                   id="title"
+                  value={title}
                   className="mr-3 block w-full rounded-md border-gray-300 shadow-sm 
                   focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   placeholder="name of link"
@@ -196,6 +183,7 @@ export default function Home() {
                   type="text"
                   name="url"
                   id="url"
+                  value={url}
                   className="mr-3 block w-full rounded-md border-gray-300 shadow-sm 
                   focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   placeholder="link URL"
@@ -246,10 +234,10 @@ export default function Home() {
                         Click or Drop here
                       </button>
                       &nbsp;
-                      <button 
+                      {/* <button 
                         className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
                         onClick={onImageRemoveAll}
-                      >Remove all images</button>
+                      >Remove all images</button> */}
                       {imageList.map((image, index) => (
                         <div key={index} className="image-item">
                           <img src={image.dataURL} alt="" width="100" />
