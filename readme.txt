@@ -23,3 +23,38 @@ update:
 .env.local has these environmental variables:
     NEXT_PUBLIC_SUPABASE_URL=
     NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+at supabase there are two tables:
+
+'links':
+
+id          int8
+created_at  timestamptz     now()
+title       varchar
+url         varchar
+user_id     varchar
+
+'users':
+
+id                      uuid
+created_at              timestamptz     now()
+profile_picture_url     varchar
+username                varchar
+
+Row Leve Security (RLS) is turned off for both tables.
+
+The 'id' for the 'users' tables is a foreign key. 
+Under foreign key, select 'auth' scheme.
+Select 'users' table to reference to. 
+Select 'id' column from 'users' to reference to.
+
+Under 'storage' create a bucket called 'public'. 
+Turn on 'Public bucket'. 
+Under 'Policies', under 'Other policies under storage.objects', 
+create a 'New policy'.
+Choose 'full customization'.
+Choose 'ALL'.
+'USING expression', type 'true' 
+'WITH CHECK expression', type 'true' 
+
+
