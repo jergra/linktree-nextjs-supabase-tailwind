@@ -203,9 +203,9 @@ export default function Home() {
                   </div>
                   <button
                     type='submit'
-                    className='ml-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 h-7 px-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                    className='ml-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600  px-2 pb-1 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
                     onClick={() => handleDelete(link.url)}
-                  >X</button>
+                  >x</button>
                 </div>
               ))}
             </div>
