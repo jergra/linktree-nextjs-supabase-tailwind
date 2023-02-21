@@ -30,16 +30,42 @@ export default function Home() {
     const getUser = async () => {
       const user = await supabase.auth.getUser()
       console.log('user:', user)
-      if (user) {
-        const userId = user.data.user?.id 
-        setIsAuthenticated(true)
-        setUserId(userId)
-        console.log('isAuthenticated:', isAuthenticated)
+
+
+      try {
+        const {data, error} = await supabase
+          .from('users')
+          .select('id')
+          .eq('username', creatorSlug)
+        if (error) throw error
+        console.log('data1[0].id:', data[0]?.id)
+        console.log('user.data.user?.id:', user.data.user?.id)
+        if (data[0]?.id === user.data.user?.id) {
+          const userId = user.data.user?.id 
+          setIsAuthenticated(true)
+          setUserId(userId)
+          console.log('isAuthenticated:', isAuthenticated)
+        } 
+        //const profilePictureUrl = data[0]['profile_picture_url']
+        //const userId = data[0]['id']
+        //setProfilePictureUrl(profilePictureUrl)
+        //setUserId(userId)
+      } catch (error) {
+        console.log('error:', error)
       }
+      
+
+
+      // if (user) {
+      //   const userId = user.data.user?.id 
+      //   setIsAuthenticated(true)
+      //   setUserId(userId)
+      //   console.log('isAuthenticated:', isAuthenticated)
+      // } 
     }
 
     getUser()
-  }, [])
+  }, [creatorSlug])
 
   useEffect(() => {
     const getLinks = async () => {
