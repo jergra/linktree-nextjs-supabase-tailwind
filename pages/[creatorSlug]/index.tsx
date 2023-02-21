@@ -116,6 +116,22 @@ export default function Home() {
     }
   }
 
+  const handleDelete = async (item: any) => {
+    console.log('item:', item)
+    try {
+      const {data, error} = await supabase
+        .from('links')
+        .delete()
+        .eq('url', item)
+        .select()
+      if (error) throw error
+      setLinks(links?.filter((link) => link.url != item))
+      console.log('data:', data)
+    } catch (error) {
+      console.log('error:', error)
+    }
+  }
+
   const uploadProfilePicture = async () => {
     try {
       if (images.length > 0) {
@@ -151,21 +167,47 @@ export default function Home() {
                 className='mt-20 rounded-full'
               />
           }
-          <div className={isAuthenticated ? '' : 'mb-96'}>
-          {links?.map((link: Link, index: number) => (
-            <div 
-                key={index}
-                className='cursor-pointer shadow-xl w-96 bg-indigo-500 mt-4 rounded-lg p-4 text-center text-white text-2xl'
-                onClick={(e) => {
-                  e.preventDefault()
-                  //window.location.href = link.url
-                  window.open(link.url, '_blank');
-                }}
-            >
-                  {link.title}
+           {!isAuthenticated && (
+            <div className={isAuthenticated ? '' : 'mb-96'}>
+              {links?.map((link: Link, index: number) => (
+                <div 
+                    key={index}
+                    className='cursor-pointer shadow-xl w-96 bg-indigo-500 mt-4 rounded-lg p-4 text-center text-white text-2xl'
+                    onClick={(e) => {
+                      e.preventDefault()
+                      //window.location.href = link.url
+                      window.open(link.url, '_blank');
+                    }}
+                >
+                      {link.title}
+                </div>
+              ))}
             </div>
-          ))}
-          </div>
+          )}
+          {isAuthenticated && (
+            <div className={isAuthenticated ? '' : 'mb-96'}>
+              {links?.map((link: Link, index: number) => (
+                <div className='flex items-center mt-4'>
+                  <div 
+                      key={index}
+                      className='cursor-pointer shadow-xl w-96 bg-indigo-500 rounded-lg p-4 text-center text-white text-2xl'
+                      onClick={(e) => {
+                        e.preventDefault()
+                        //window.location.href = link.url
+                        window.open(link.url, '_blank');
+                      }}
+                  >
+                        {link.title}
+                  </div>
+                  <button
+                    type='submit'
+                    className='ml-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 h-7 px-2 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                    onClick={() => handleDelete(link.url)}
+                  >X</button>
+                </div>
+              ))}
+            </div>
+          )}
           {isAuthenticated && (
             <>
               <div className='mt-10 flex h-10 items-center p-5'>

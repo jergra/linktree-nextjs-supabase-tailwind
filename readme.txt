@@ -18,3 +18,8 @@ update:
     git add .
     git commit -m 'message'
     git push
+
+
+.env.local has these environmental variables:
+    NEXT_PUBLIC_SUPABASE_URL=
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=
