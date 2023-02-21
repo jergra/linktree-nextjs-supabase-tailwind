@@ -187,9 +187,11 @@ export default function Home() {
           {isAuthenticated && (
             <div className={isAuthenticated ? '' : 'mb-96'}>
               {links?.map((link: Link, index: number) => (
-                <div className='flex items-center mt-4'>
-                  <div 
-                      key={index}
+                <div 
+                  className='flex items-center mt-4'
+                  key={index}
+                >
+                  <div
                       className='cursor-pointer shadow-xl w-96 bg-indigo-500 rounded-lg p-4 text-center text-white text-2xl'
                       onClick={(e) => {
                         e.preventDefault()
