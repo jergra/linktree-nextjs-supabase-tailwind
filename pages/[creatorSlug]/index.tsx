@@ -40,12 +40,14 @@ export default function Home() {
         if (error) throw error
         console.log('data1[0].id:', data[0]?.id)
         console.log('user.data.user?.id:', user.data.user?.id)
-        if (data[0]?.id === user.data.user?.id) {
-          const userId = user.data.user?.id 
-          setIsAuthenticated(true)
-          setUserId(userId)
-          console.log('isAuthenticated:', isAuthenticated)
-        } 
+        if (data[0]?.id && user.data.user?.id) {
+          if (data[0]?.id === user.data.user?.id) {
+            const userId = user.data.user?.id 
+            setIsAuthenticated(true)
+            setUserId(userId)
+            console.log('isAuthenticated:', isAuthenticated)
+          } 
+        }
         //const profilePictureUrl = data[0]['profile_picture_url']
         //const userId = data[0]['id']
         //setProfilePictureUrl(profilePictureUrl)
