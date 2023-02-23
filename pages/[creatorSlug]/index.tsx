@@ -4,6 +4,7 @@ import ImageUploading, { ImageListType } from "react-images-uploading"
 //import { idText } from "typescript"
 import Image from 'next/image'
 import {useRouter} from 'next/router'
+import {AiFillGithub} from 'react-icons/ai'
 
 type Link = {
   title: string
@@ -157,156 +158,166 @@ export default function Home() {
   }
 
   return (
-        <div className='flex flex-col justify-center items-center w-full bg-indigo-50'>
-          {profilePictureUrl && 
-              <Image
-                src={profilePictureUrl}
-                alt='profile-picture'
-                height={100}
-                width={100}
-                className='mt-20 rounded-full'
-              />
-          }
-           {!isAuthenticated && (
-            <div className={isAuthenticated ? '' : 'mb-96'}>
-              {links?.map((link: Link, index: number) => (
-                <div 
-                    key={index}
-                    className='cursor-pointer shadow-xl w-96 bg-indigo-500 mt-4 rounded-lg p-4 text-center text-white text-2xl'
-                    onClick={(e) => {
-                      e.preventDefault()
-                      //window.location.href = link.url
-                      window.open(link.url, '_blank');
-                    }}
-                >
-                      {link.title}
-                </div>
-              ))}
+    <div className='flex flex-col justify-center items-center w-full bg-indigo-50'>
+      {profilePictureUrl && 
+        <Image
+          src={profilePictureUrl}
+          alt='profile-picture'
+          height={100}
+          width={100}
+          className='mt-20 rounded-full'
+        />
+      }
+        {!isAuthenticated && (
+        <div className={isAuthenticated ? '' : 'mb-96'}>
+          {links?.map((link: Link, index: number) => (
+            <div 
+                key={index}
+                className='cursor-pointer shadow-xl w-96 bg-indigo-500 mt-4 rounded-lg p-4 text-center text-white text-2xl'
+                onClick={(e) => {
+                  e.preventDefault()
+                  //window.location.href = link.url
+                  window.open(link.url, '_blank');
+                }}
+            >
+                  {link.title}
             </div>
-          )}
-          {isAuthenticated && (
-            <div className={isAuthenticated ? '' : 'mb-96'}>
-              {links?.map((link: Link, index: number) => (
-                <div 
-                  className='flex items-center mt-4'
-                  key={index}
-                >
-                  <div
-                      className='cursor-pointer shadow-xl w-96 bg-indigo-500 rounded-lg p-4 text-center text-white text-2xl'
-                      onClick={(e) => {
-                        e.preventDefault()
-                        //window.location.href = link.url
-                        window.open(link.url, '_blank');
-                      }}
-                  >
-                        {link.title}
-                  </div>
-                  <button
-                    type='submit'
-                    className='ml-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600  px-2 pb-1 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-                    onClick={() => handleDelete(link.url)}
-                  >x</button>
-                </div>
-              ))}
-            </div>
-          )}
-          {isAuthenticated && (
-            <>
-              <div className='mt-10 flex h-10 items-center p-5'>
-                <input
-                  type="text"
-                  name="title"
-                  id="title"
-                  value={title}
-                  className="mr-3 block w-full rounded-md border-gray-300 shadow-sm 
-                  focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  placeholder="name of link"
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-                <input
-                  type="text"
-                  name="url"
-                  id="url"
-                  value={url}
-                  className="mr-3 block w-full rounded-md border-gray-300 shadow-sm 
-                  focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  placeholder="link URL"
-                  onChange={(e) => setUrl(e.target.value)}
-                />
-                <button
-                  type="submit"
-                  className="w-[300px] inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  onClick={addNewLink}
-                >
-                  Add New Link
-                </button>    
-              </div>
-              
-              <div className="mt-14 flex flex-col">
-                {images.length > 0 && (
-                <Image
-                  src={images[0]['data_url']}
-                  height={100}
-                  width={100}
-                  alt='profile-picture'
-                />
-                )}
-                <ImageUploading
-                  multiple
-                  value={images}
-                  onChange={onChange}
-                  maxNumber={1}
-                  dataURLKey='data_url'
-                >
-                  {({
-                    imageList,
-                    onImageUpload,
-                    onImageRemoveAll,
-                    onImageUpdate,
-                    onImageRemove,
-                    isDragging,
-                    dragProps
-                  }) => (
-                    // write your building UI
-                    <div className="">
-                      <button
-                        className='p-10 h-100 w-100 rounded-md border border-gray-300 shadow-sm bg-white'
-                        style={isDragging ? { color: "red" } : undefined}
-                        onClick={onImageUpload}
-                        {...dragProps}
-                      >
-                        Click or Drop here
-                      </button>
-                      &nbsp;
-                      {/* <button 
-                        className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-                        onClick={onImageRemoveAll}
-                      >Remove all images</button> */}
-                      {imageList.map((image, index) => (
-                        <div key={index} className="image-item">
-                          <img src={image.dataURL} alt="" width="100" />
-                          <div className="image-item__btn-wrapper">
-                            <button 
-                              onClick={() => onImageUpdate(index)}
-                              className='mr-2'
-                            >Update</button>
-                            <button onClick={() => onImageRemove(index)}>Remove</button>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </ImageUploading>
-                <button
-                  type="submit"
-                  className="mt-4 mb-96 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  onClick={uploadProfilePicture}
-                >
-                  Upload Profile Picture
-                </button>    
-              </div>
-            </>
-          )}
+          ))}
         </div>
+      )}
+      {isAuthenticated && (
+        <div className={isAuthenticated ? '' : 'mb-96'}>
+          {links?.map((link: Link, index: number) => (
+            <div 
+              className='flex items-center mt-4'
+              key={index}
+            >
+              <div
+                  className='cursor-pointer shadow-xl w-96 bg-indigo-500 rounded-lg p-4 text-center text-white text-2xl'
+                  onClick={(e) => {
+                    e.preventDefault()
+                    //window.location.href = link.url
+                    window.open(link.url, '_blank');
+                  }}
+              >
+                    {link.title}
+              </div>
+              <button
+                type='submit'
+                className='ml-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-600  px-2 pb-1 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                onClick={() => handleDelete(link.url)}
+              >x</button>
+            </div>
+          ))}
+        </div>
+      )}
+      {isAuthenticated && (
+        <>
+          <div className='mt-10 flex h-10 items-center p-5'>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              value={title}
+              className="mr-3 block w-full rounded-md border-gray-300 shadow-sm 
+              focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              placeholder="name of link"
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <input
+              type="text"
+              name="url"
+              id="url"
+              value={url}
+              className="mr-3 block w-full rounded-md border-gray-300 shadow-sm 
+              focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              placeholder="link URL"
+              onChange={(e) => setUrl(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="w-[300px] inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={addNewLink}
+            >
+              Add New Link
+            </button>    
+          </div>
+          
+          <div className="mt-14 flex flex-col">
+            {images.length > 0 && (
+            <Image
+              src={images[0]['data_url']}
+              height={100}
+              width={100}
+              alt='profile-picture'
+            />
+            )}
+            <ImageUploading
+              multiple
+              value={images}
+              onChange={onChange}
+              maxNumber={1}
+              dataURLKey='data_url'
+            >
+              {({
+                imageList,
+                onImageUpload,
+                onImageRemoveAll,
+                onImageUpdate,
+                onImageRemove,
+                isDragging,
+                dragProps
+              }) => (
+                // write your building UI
+                <div className="">
+                  <button
+                    className='p-10 h-100 w-100 rounded-md border border-gray-300 shadow-sm bg-white'
+                    style={isDragging ? { color: "red" } : undefined}
+                    onClick={onImageUpload}
+                    {...dragProps}
+                  >
+                    Click or Drop here
+                  </button>
+                  &nbsp;
+                  {/* <button 
+                    className='ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+                    onClick={onImageRemoveAll}
+                  >Remove all images</button> */}
+                  {imageList.map((image, index) => (
+                    <div key={index} className="image-item">
+                      <img src={image.dataURL} alt="" width="100" />
+                      <div className="image-item__btn-wrapper">
+                        <button 
+                          onClick={() => onImageUpdate(index)}
+                          className='mr-2'
+                        >Update</button>
+                        <button onClick={() => onImageRemove(index)}>Remove</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </ImageUploading>
+            <button
+              type="submit"
+              className="mt-4 mb-96 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              onClick={uploadProfilePicture}
+            >
+              Upload Profile Picture
+            </button>    
+          </div>
+        </>
+      )}
+      <footer className='mb-20'>
+        <a
+          href="https://github.com/jergra/linktree-nextjs-supabase-tailwind"
+          target='_blank'
+          rel='noreferrer'
+          className='text-indigo-600 hover:text-indigo-700'
+        >
+          <AiFillGithub size={40} />
+        </a>
+      </footer>
+    </div>
   )
 }
